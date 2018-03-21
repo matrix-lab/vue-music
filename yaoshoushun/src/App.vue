@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    hello new world
   </div>
 </template>
 
@@ -20,4 +19,12 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+</style>
+
+<style scoped lang="stylus" rel="stylesheet/stylus">
+    @import "~common/stylus/variable"
+
+  #app
+    color:color-theme
+
 </style>
