@@ -26,10 +26,6 @@
           type: Boolean,
           default: true
         },
-        autoPlay: {
-          type: Boolean,
-          default: true
-        },
         interval: {
           type: Number,
           default: 3000
@@ -115,6 +111,9 @@
         _initDots() {
           this.dots = new Array(5)
         }
+      },
+      destroyed() {
+        clearTimeout(this.timer)
       }
     }
 </script>
