@@ -66,6 +66,7 @@
 
         for (let key in map) {
           let val = map[key]
+          val.idHref = 'singer_' + val.title
 
           if (val.title.match(/[a-zA-Z]/)) {
             ret.push(val)

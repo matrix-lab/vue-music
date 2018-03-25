@@ -36,10 +36,18 @@
         if (!this.$refs.wrapper) {
           return
         }
+
         this.scroll = new BScroll(this.$refs.wrapper, {
           probeType: this.probeType,
           click: this.click
         })
+
+        if (this.listenScroll) {
+          let me = this
+          this.scroll.on('scroll', (pos) => {
+            me.$emit('scroll', pos)
+          })
+        }
       },
       disable() {
         this.scroll && this.scroll.disable()
