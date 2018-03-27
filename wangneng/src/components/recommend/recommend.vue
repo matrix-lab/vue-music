@@ -15,14 +15,17 @@
                     <ul>
                         <li v-for="item in discList" class="item">
                             <div class="icon">
-                                <img width="60" height="60" v-lazy="item.picUrl" alt="">
+                                <img  height="60" v-lazy="item.picurl" alt="">
                             </div>
                             <div class="text">
-                                <h2 class="name" v-html="item.songListAuthor"></h2>
-                                <p class="desc" v-html="item.songListDesc"></p>
+                                <h2 class="name" v-html="item.mvtitle"></h2>
+                                <p class="desc" v-html="item.mvdesc"></p>
                             </div>
                         </li>
                     </ul>
+                </div>
+                <div class="lodding-container" v-show="!discList.length">
+                    <loading></loading>
                 </div>
             </Scroll>
         </div>
@@ -30,75 +33,36 @@
 
 <script >
     import Slider from "@/base/slider/slider";
-    import {getRecommend} from "@/api/recommend";
+    import {getRecommend,getDiscList} from "@/api/recommend";
     import {ERR_OK} from "@/api/config";
     import Scroll from "@/base/scroll/scroll";
+    import Loading from "@/base/loading/loading";
 
     export default {
       data() {
         return {
           slider: [],
-          discList:[{
-            accessnum:8014255,
-            album_pic_mid:"",
-            id:"2646688496",
-            picUrl:"http://p.qpic.cn/music_cover/1Fr9IFMhWDPeUzWKVEjn3QTL2eX2QziaJmaL0ZAmsvtW71ic9IDUoYzg/300?n=1",
-            pic_mid:"00333So02drvak",
-            songListAuthor:"Harry",
-            songListDesc:"催泪大杀器！盘点演唱会经典万人大合唱"
-          },{
-              accessnum:639211,
-              album_pic_mid:"",
-              id:"1144416825",
-              picUrl:"http://p.qpic.cn/music_cover/z8wAFqicQ1qhImeiajkrgiaR4hYM3pzsUULFnicXshFXdw9uGkm261Ex9g/300?n=1",
-              pic_mid:"0013j8zs1jRnLQ",
-              songListAuthor:"草地",
-              songListDesc:"纳尼？这些华语歌手竟然会唱日语歌！"
-          },{
-            accessnum:8014255,
-            album_pic_mid:"",
-            id:"2646688497",
-            picUrl:"http://p.qpic.cn/music_cover/1Fr9IFMhWDPeUzWKVEjn3QTL2eX2QziaJmaL0ZAmsvtW71ic9IDUoYzg/300?n=1",
-            pic_mid:"00333So02drvak",
-            songListAuthor:"Harry",
-            songListDesc:"催泪大杀器！盘点演唱会经典万人大合唱"
-          },{
-            accessnum:639211,
-            album_pic_mid:"",
-            id:"1144416828",
-            picUrl:"http://p.qpic.cn/music_cover/z8wAFqicQ1qhImeiajkrgiaR4hYM3pzsUULFnicXshFXdw9uGkm261Ex9g/300?n=1",
-            pic_mid:"0013j8zs1jRnLQ",
-            songListAuthor:"草地",
-            songListDesc:"纳尼？这些华语歌手竟然会唱日语歌！"
-          },{
-            accessnum:8014255,
-            album_pic_mid:"",
-            id:"2646688491",
-            picUrl:"http://p.qpic.cn/music_cover/1Fr9IFMhWDPeUzWKVEjn3QTL2eX2QziaJmaL0ZAmsvtW71ic9IDUoYzg/300?n=1",
-            pic_mid:"00333So02drvak",
-            songListAuthor:"Harry",
-            songListDesc:"催泪大杀器！盘点演唱会经典万人大合唱"
-          },{
-            accessnum:639211,
-            album_pic_mid:"",
-            id:"1144416822",
-            picUrl:"http://p.qpic.cn/music_cover/z8wAFqicQ1qhImeiajkrgiaR4hYM3pzsUULFnicXshFXdw9uGkm261Ex9g/300?n=1",
-            pic_mid:"0013j8zs1jRnLQ",
-            songListAuthor:"草地",
-            songListDesc:"纳尼？这些华语歌手竟然会唱日语歌！"
-          }
-          ]
+          discList:[]
         };
       },
         created(){
             this._getRecommend()
+            this._getDiscList()
         },
         methods:{
             _getRecommend(){
                 getRecommend().then((res)=>{
                     if(res.code===ERR_OK){
-                      console.log(res.data.slider)
                       this.slider=res.data.slider
+                      
+                    }
+                })
+            },
+            _getDiscList(){
+                getDiscList().then((res)=>{
+                    if(res.code===ERR_OK){
+                      console.log(res.data)
+                    this.discList=res.data.mvlist
                     }
                 })
             },
@@ -110,7 +74,8 @@
         },
       components:{
         Slider,
-        Scroll
+        Scroll,
+        Loading
       }
     }
 
@@ -128,6 +93,7 @@
         .recommend-content{
             height: 100%;
             overflow: scroll;
+            background: #222;
             .slider-wrapper{
                 position: relative;
                 width: 100%;
@@ -135,6 +101,7 @@
 
             }
             .recommend-list{
+                background: #222;
                 .list-title{
                     height: 65px;
                     line-height: 65px;
@@ -149,6 +116,10 @@
                     .icon{
                         flex: 0 0 60px;
                         padding-right: 20px;
+                        height: 60px;
+                        width: 60px;
+                        overflow: hidden;
+                        margin-right: 10px;
                     }
                     .text{
                         display: flex;

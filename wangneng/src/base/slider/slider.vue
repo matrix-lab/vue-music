@@ -39,6 +39,13 @@
           this._setSliderWidth();
           this._initSlider();
         },20)
+         window.addEventListener('resize', () => {
+            if (!this.slider) {
+            return
+          }
+          this._setSliderWidth(true)
+          this.slider.refresh()
+        })
       },
       methods:{
         _setSliderWidth(){

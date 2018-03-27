@@ -35,7 +35,7 @@
     border:0;
     outline:none;
     font-size:100%;
-    background:transparent;
+    // background:transparent;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     font-family: "Microsoft YaHei" !important;

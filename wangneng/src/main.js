@@ -3,9 +3,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-// import jsponp from './jsponp';
 // import './assets/reset.less';
-// require('../node_modules/vux/src/assets/less/reset.less');
 import VueLazyLoad from 'vue-lazyload'
 Vue.use(VueLazyLoad,{
     loading:require("@/assets/images/default.png")
@@ -16,7 +14,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
-  // render: h => h(App)
-  components: { App },
-  template: '<App/>',
+  render: h => h(App)
+  // components: { App },
+  // template: '<App/>',
 });

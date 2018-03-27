@@ -37,6 +37,7 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
       'assets': resolve('src/assets'),
+      'less': resolve('src/assets/less'),
     }
   },
   module: {
@@ -77,17 +78,17 @@ module.exports = {
         }
       },
        {
-                test: /\.css$/,
-                use: ["vue-style-loader", "css-loader"]
-            },
-            {
-                test: /\.less$/,
-                loader: "style-loader!css-loader!less-loader",
-            },
-            {
-                test: /\.(scss|sass)$/,
-                use: ["node-sass", "vue-style-loader", "css-loader", "sass-loader"]
-            }
+            test: /\.css$/,
+            use: ["vue-style-loader", "css-loader"]
+        },
+        {
+            test: /\.less$/,
+            loader: "style-loader!css-loader!less-loader",
+        },
+        {
+            test: /\.(scss|sass)$/,
+            use: ["node-sass", "vue-style-loader", "css-loader", "sass-loader"]
+        }
     ]
   },
   node: {
