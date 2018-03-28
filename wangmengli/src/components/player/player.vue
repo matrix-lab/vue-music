@@ -160,7 +160,7 @@ export default {
     },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
-      setPlayingState: 'SET_PLAYING_STATE',
+      setPlayingState: 'SET_PLAYING_STATE'
     })
   },
   watch: {
