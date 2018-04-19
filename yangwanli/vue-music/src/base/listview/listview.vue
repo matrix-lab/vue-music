@@ -9,7 +9,7 @@
       <li class="list-group" v-for="group in data" ref="listGroup">
         <h2 class="list-group-title">{{group.title}}</h2>
         <ul>
-          <li class="list-group-item" v-for="item in group.items">
+          <li class="list-group-item" v-for="item in group.items" @click="selectItem(item)">
             <img v-lazy="item.avatar" alt="" class="avatar">
             <span class="name">{{item.name}}</span>
           </li>
@@ -24,7 +24,7 @@
             :class="{'current':currentIndex===index}">{{item}}</li>
       </ul>
     </div>
-    <div class="list-fixed" ref="fixed">
+    <div class="list-fixed" ref="fixed" v-show="fixedTitle">
       <h1 class="fixed-title">{{fixedTitle}}</h1>
     </div>
     <div class="loading-container" v-show="!data.length">
@@ -73,6 +73,9 @@
       }
     },
     methods:{
+      selectItem(item){
+        this.$emit('select',item)
+      },
       onShortcutTouchStart(e){
         let anchorIndex = getData(e.target,'index')
         let firstTouch = e.touches[0]
@@ -120,7 +123,6 @@
         },20)
       },
       scrollY (newY) {
-        console.log(newY)
         let listHeight = this.listHeight
         //滚动到顶部时，newY>0
         if(newY>0){

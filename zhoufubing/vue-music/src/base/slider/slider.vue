@@ -5,6 +5,8 @@
             </slot>
         </div>
         <div class="dots">
+          <span class="dot" v-for="(item,index) in dots" :class="{active: 
+            currentPageIndex === index }"></span>
         </div>
     </div>
 </template>
@@ -14,6 +16,12 @@ import BScroll from 'better-scroll'
 import {addClass} from 'common/js/dom'
 
 export default {
+  data() {
+    return {
+      dots: [],
+      currentPageIndex: 0,
+    }
+  },
   props: {
     loop: {
       type: Boolean,
@@ -32,10 +40,23 @@ export default {
     setTimeout(() => {
       this._setSliderWith()
       this._initSlider()
+      this._initDots()
+
+      if(this.autoPlay){
+        this._play()
+      }
     },20)
+
+    window.addEventListener('resize', ()=>{
+      if(!this.slider){
+        return
+      }
+      this._setSliderWith(true)
+      this.slider.refresh()
+    })
   },
   methods: {
-    _setSliderWith() {
+    _setSliderWith(isResize) {
       this.children = this.$refs.sliderGroup.children
 
       let width = 0
@@ -49,7 +70,7 @@ export default {
         width += sliderWith
       }
 
-      if(this.loop){
+      if(this.loop && !isResize){
         width += 2* sliderWith
       }
 
@@ -68,6 +89,34 @@ export default {
           click: true
         }
       )
+
+      this.slider.on('scrollEnd', ()=>{
+        let pageIndex = this.slider.getCurrentPage().pageX
+
+        if(this.loop){
+          pageIndex -= 1
+        }
+
+        this.currentPageIndex = pageIndex
+
+        if(this.autoPlay){
+          clearTimeout(this.timer)
+          this._play()
+        }
+      })
+    },
+    _initDots() {
+      this.dots = new Array(this.children.length)
+    },
+    _play(){
+      let pageIndex = this.currentPageIndex + 1
+      if (this.loop) {
+        pageIndex += 1
+      }
+
+      this.timer = setTimeout(()=>{
+        this.slider.goToPage(pageIndex, 0, 400) 
+      },this.interval)
     }
   }
 }
