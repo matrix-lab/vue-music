@@ -4,6 +4,7 @@ import App from './App'
 import router from './router'
 import fastclick from 'fastclick' // 解决3毫秒的延迟
 import VueLazyLoad from 'vue-lazyload'
+import store from './store'
 
 import 'common/stylus/index.styl'
 
@@ -16,6 +17,7 @@ Vue.use(VueLazyLoad, {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   render: h => h(App)
 })

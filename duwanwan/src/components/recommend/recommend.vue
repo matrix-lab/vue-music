@@ -39,6 +39,8 @@
   import Slider from 'base/slider/slider'
   import { getRecommend, getDiscList } from 'api/recommend'
   import { ERR_OK } from 'api/config'
+  import {mapMutations} from 'vuex'
+//  import {playlistMixin} from 'common/js/mixin'
 
   export default {
     components: {
@@ -73,12 +75,27 @@
           }
         })
       },
+      selectItem(item) {
+        this.$router.push({
+          path: `/recommend/${item.dissid}`
+        })
+        this.setDisc(item)
+      },
       loadImage () {
         if (!this.checkLoaded) {
           this.$refs.scroll.refresh()
           this.checkLoaded = true
         }
-      }
+      },
+      ...mapMutations({
+        setDisc: 'SET_DISC'
+      })
+//      handlePlaylist(playlist) {
+//        const bottom = playlist.length > 0 ? '60px' : ''
+//
+//        this.$refs.recommend.style.bottom = bottom
+//        this.$refs.scroll.refresh()
+//      }
     }
   }
 </script>

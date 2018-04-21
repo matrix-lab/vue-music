@@ -14,15 +14,15 @@
       },
       click: {
         type: Boolean,
-        default: false
-      },
-      listenScroll: {
-        type: Boolean,
-        default: false
+        default: true
       },
       data: {
         type: Array,
         default: null
+      },
+      listenScroll: {
+        type: Boolean,
+        default: false
       }
     },
     mounted () {
@@ -40,15 +40,27 @@
           click: this.click
 //          eventPassthrough: this.direction === DIRECTION_V ? DIRECTION_H : DIRECTION_V
         })
+        if (this.listenScroll) {
+          let me = this
+          this.scroll.on('scroll', (pos) => {
+            me.$emit('scroll', pos)
+          })
+        }
       },
       enable () {
-        this.scroll && this.enable()
+        this.scroll && this.scroll.enable()
       },
       disable () {
-        this.scroll && this.disable()
+        this.scroll && this.scroll.disable()
       },
       refresh () {
-        this.scroll && this.refresh()
+        this.scroll && this.scroll.refresh()
+      },
+      scrollTo () {
+        this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+      },
+      scrollToElement () {
+        this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       }
     },
     watch: {
